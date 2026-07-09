@@ -1,0 +1,79 @@
+#####  Heart Disease Prediction – Run Instructions
+
+1. Train the Model
+
+Run the training script to generate the pipeline and save it into models/final_pipeline.pkl:
+
+python -m src.train
+
+This will:
+
+Load and preprocess the dataset.
+
+Train the ML model.
+
+Save the trained pipeline into the models/ directory.
+
+2. Start the API Server
+
+Launch the FastAPI app with Uvicorn:
+
+uvicorn src.app:app --host 0.0.0.0 --port 8000
+
+This will:
+
+Start the API server on port 8000.
+
+Expose two endpoints:
+
+POST /predict → for predictions.
+
+GET /metrics → for Prometheus monitoring.
+
+3. Make Predictions
+
+Send a request to the /predict endpoint with patient features:
+
+curl -X POST "http://localhost:8000/predict" \
+     -H "Content-Type: application/json" \
+     -d '{"features":[52,1,0,128,205,1,1,184,0,0.0,2,0,2]}'
+
+Example response:
+
+{
+  "prediction": "Mild disease",
+  "probabilities": {
+    "No disease": 0.12,
+    "Mild disease": 0.65,
+    "Moderate disease": 0.18,
+    "Severe disease": 0.04,
+    "Very severe disease": 0.01
+  }
+}
+
+4. Run Tests
+
+Execute unit tests to validate preprocessing, model loading, and API endpoints:
+
+python -m pytest -v
+
+This will:
+
+Run all tests in the tests/ folder.
+
+Show which tests passed/failed.
+
+5. Monitor with Prometheus & Grafana
+
+Prometheus scrapes metrics from http://localhost:8000/metrics.
+
+Grafana visualizes request counts, latency, failures, and feature drift.
+
+Configure Prometheus with:
+
+scrape_configs:
+  - job_name: "fastapi-app"
+    static_configs:
+      - targets: ["localhost:8000"]
+
+✅ With these steps, you can train, serve, test, and monitor your heart disease prediction model end‑to‑end.
