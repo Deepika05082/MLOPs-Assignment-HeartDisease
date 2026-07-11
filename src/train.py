@@ -55,7 +55,7 @@ def train_and_log():
     best_rf = rand_rf.best_estimator_
 
     os.makedirs("models", exist_ok=True)
-
+    mlflow.end_run()
     # Evaluate and log both models
     for pipeline, name, params in [(best_log, "Logistic Regression", grid_log.best_params_),
                                    (best_rf, "Random Forest", rand_rf.best_params_)]:
@@ -98,7 +98,7 @@ def train_and_log():
             plt.ylabel("True Positive Rate")
             plt.title(f"{name} ROC Curves (OvR)")
             plt.legend(loc="lower right")
-            roc_path = f"roc_curve_{name.replace(' ', '_')}.png"
+            roc_path =f"eda/roc_curve_{name.replace(' ', '_')}.png"
             plt.savefig(roc_path)
             mlflow.log_artifact(roc_path)
             plt.close()
@@ -106,13 +106,30 @@ def train_and_log():
             # Confusion Matrix
             ConfusionMatrixDisplay.from_estimator(pipeline, X_test, y_test)
             plt.title(f"{name} Confusion Matrix")
-            cm_path = f"confusion_matrix_{name.replace(' ', '_')}.png"
+            cm_path = f"eda/confusion_matrix_{name.replace(' ', '_')}.png"
             plt.savefig(cm_path)
             mlflow.log_artifact(cm_path)
             plt.close()
 
             # Save final pipeline
             joblib.dump(pipeline, "models/final_model.pkl")
+            if name == "Random Forest":
+                preprocessor.fit(X_train)
+                feature_names = preprocessor.get_feature_names_out()
+                importances = pipeline.named_steps["model"].feature_importances_
+                indices = np.argsort(importances)[::-1][:10]
+
+                plt.figure(figsize=(10, 6))
+                plt.bar(range(len(indices)), importances[indices], align="center")
+                plt.xticks(range(len(indices)), [feature_names[i] for i in indices],
+                           rotation=45, ha="right")
+                plt.title("Top 10 Feature Importances (Random Forest)")
+                plt.tight_layout()
+                plt.savefig("eda/feature_importance.png")
+                mlflow.log_artifact("eda/feature_importance.png")
+                plt.close()
+
+            mlflow.end_run()  
 
 if __name__ == "__main__":
     train_and_log()

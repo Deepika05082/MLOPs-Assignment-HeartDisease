@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: heart-disease-app
+  name: heart-disease-model
   labels:
-    app: heart-disease-app
+    app: heart-disease-model
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: heart-disease-app
+      app: heart-disease-model
   template:
     metadata:
       labels:
-        app: heart-disease-app
+        app: heart-disease-model
     spec:
       containers:
-      - name: heart-disease-app
-        image: heart-disease-app:latest
-        imagePullPolicy: IfNotPresent
+      - name: heart-disease-model
+        image: heart-disease-model:latest
+        imagePullPolicy: Never
         ports:
-        - containerPort: 5000
+        - containerPort: 8000

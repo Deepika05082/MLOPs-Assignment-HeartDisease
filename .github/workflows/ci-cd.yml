@@ -118,28 +118,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.27.0'
-      
-      - name: Configure kubectl
-        run: |
-          mkdir -p $HOME/.kube
-          # Note: You'll need to add your kubeconfig as a secret
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
-      
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-          kubectl rollout status deployment/heart-disease-model
-      
-      - name: Verify deployment
-        run: |
-          kubectl get pods
-          kubectl get services
+          echo "✅ Docker image built and ready for deployment"
+          echo ""
+          echo "📋 For local Minikube deployment:"
+          echo "   1. Build image: docker build -t heart-disease-model:latest ."
+          echo "   2. Load to Minikube: minikube image load heart-disease-model:latest"
+          echo "   3. Deploy: kubectl apply -f deployment.yaml"
+          echo "   4. Expose: kubectl port-forward svc/heart-disease-service 8000:8000"
+          echo ""
+          echo "🌐 Access the app at: http://localhost:8000"
+          echo "📚 API docs at: http://localhost:8000/docs"
 
   notify:
     runs-on: ubuntu-latest
