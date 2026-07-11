@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: heart-disease-model
-        image: ghcr.io/your-username/your-repo:latest  # Update with your repo
+        image: ghcr.io/Deepika05082/MLOPs-Assignment-HeartDisease:latest  # Update with your repo
         imagePullPolicy: Always
         ports:
         - name: http
