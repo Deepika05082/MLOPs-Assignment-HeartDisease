@@ -23,8 +23,8 @@ spec:
         version: v1
     spec:
       containers:
-      - name: heart-disease-model
-        image: ghcr.io/Deepika05082/MLOPs-Assignment-HeartDisease:latest  # Update with your repo
+      - name: heart-disease-model     
+        image: ghcr.io/deepika05082/mlops-assignment-heartdisease:latest  # Update with your repo
         imagePullPolicy: Always
         ports:
         - name: http
