@@ -107,7 +107,11 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
+      - name: Run container for testing
+        run: |
+          docker run -d -p 8000:8000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          sleep 10
+          curl --fail http://localhost:8000/docs || (echo "Container health check failed" && exit 1)
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to Kubernetes
@@ -120,7 +124,7 @@ jobs:
       
       - name: Deploy to Kubernetes
         run: |
-          echo "✅ Docker image built and ready for deployment"
+          echo " Docker image built and ready for deployment"
           echo ""
           echo "📋 For local Minikube deployment:"
           echo "   1. Build image: docker build -t heart-disease-model:latest ."
@@ -128,8 +132,8 @@ jobs:
           echo "   3. Deploy: kubectl apply -f deployment.yaml"
           echo "   4. Expose: kubectl port-forward svc/heart-disease-service 8000:8000"
           echo ""
-          echo "🌐 Access the app at: http://localhost:8000"
-          echo "📚 API docs at: http://localhost:8000/docs"
+          echo "Access the app at: http://localhost:8000"
+          echo " API docs at: http://localhost:8000/docs"
 
   notify:
     runs-on: ubuntu-latest
