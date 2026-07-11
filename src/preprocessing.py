@@ -1,4 +1,3 @@
-import pandas as pd
 from ucimlrepo import fetch_ucirepo
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -11,12 +10,6 @@ import seaborn as sns
 import mlflow
 import numpy as np
 
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import train_test_split
-from ucimlrepo import fetch_ucirepo
 
 def preprocess_data(test_size=0.2, random_state=42):
     # Fetch dataset

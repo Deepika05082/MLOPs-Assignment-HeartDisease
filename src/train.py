@@ -13,6 +13,7 @@ from sklearn.pipeline import Pipeline
 from src.preprocessing import preprocess_data
 import os
 
+
 def train_and_log():
     # Get preprocessed data and preprocessor
     X_train, X_test, y_train, y_test, preprocessor = preprocess_data()
@@ -83,8 +84,6 @@ def train_and_log():
 
             # Log the saved pipeline as an artifact
             mlflow.log_artifact(f"models/{name}_pipeline.pkl")
-
-
             n_classes = y_proba.shape[1]
 
             plt.figure(figsize=(8, 6))
@@ -98,7 +97,7 @@ def train_and_log():
             plt.ylabel("True Positive Rate")
             plt.title(f"{name} ROC Curves (OvR)")
             plt.legend(loc="lower right")
-            roc_path =f"eda/roc_curve_{name.replace(' ', '_')}.png"
+            roc_path = f"eda/roc_curve_{name.replace(' ', '_')}.png"
             plt.savefig(roc_path)
             mlflow.log_artifact(roc_path)
             plt.close()
@@ -129,7 +128,8 @@ def train_and_log():
                 mlflow.log_artifact("eda/feature_importance.png")
                 plt.close()
 
-            mlflow.end_run()  
+            mlflow.end_run()
+
 
 if __name__ == "__main__":
     train_and_log()

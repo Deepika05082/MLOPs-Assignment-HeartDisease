@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 import joblib
-import numpy as np
 import logging
 import pandas as pd
 import time
@@ -26,12 +25,14 @@ REQUEST_COUNT = Counter("request_count_total", "Total prediction requests")
 FAILED_PREDICTIONS = Counter("failed_predictions_total", "Number of failed predictions")
 
 # Data drift (example: age feature distribution)
-AGE_HIST = Histogram("feature_age", "Distribution of age feature", buckets=[20,30,40,50,60,70,80])
+AGE_HIST = Histogram("feature_age", "Distribution of age feature", buckets=[20, 30, 40, 50, 60, 70, 80])
 
 # Performance degradation (latency)
 REQUEST_LATENCY = Histogram("request_latency_seconds", "Latency of prediction requests")
 
 # --- Endpoints ---
+
+
 @app.post("/predict")
 def predict(data: dict):
     start = time.time()
@@ -43,7 +44,6 @@ def predict(data: dict):
         AGE_HIST.observe(features[0])
 
         y_pred = pipeline.predict(X)[0]
-        y_proba = pipeline.predict_proba(X)[0]
 
         # Map probabilities to class labels
         class_labels = {
@@ -68,6 +68,7 @@ def predict(data: dict):
     except Exception:
         FAILED_PREDICTIONS.inc()
         raise
+
 
 @app.get("/metrics")
 def metrics():
