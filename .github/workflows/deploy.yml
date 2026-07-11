@@ -1,0 +1,44 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main   
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      ACR_NAME: ${{ secrets.ACR_NAME }}
+      RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+      AKS_CLUSTER: ${{ secrets.AKS_CLUSTER }}
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Azure
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Step 3: Log in to Azure Container Registry (ACR)
+      - name: Log in to ACR
+        run: |
+          az acr login --name $ACR_NAME
+
+      # Step 4: Build and Push Docker Image
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_NAME="$ACR_NAME.azurecr.io/heart-api:${{ github.sha }}"
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
+
+      # Step 5: Deploy to AKS
+      - name: Deploy to AKS
+        run: |
+          az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER
+          kubectl set image deployment/heart-api heart-api=$ACR_NAME.azurecr.io/heart-api:${{ github.sha }}
+          kubectl rollout status deployment/heart-api

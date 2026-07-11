@@ -1,9 +1,7 @@
 import numpy as np
 import joblib
 import mlflow
-from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
-import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
