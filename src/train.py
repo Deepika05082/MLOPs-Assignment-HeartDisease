@@ -12,9 +12,23 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.pipeline import Pipeline
 from src.preprocessing import preprocess_data
 import os
+from prometheus_client import Gauge, start_http_server
+from sklearn.exceptions import ConvergenceWarning
+import warnings
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
+
+
+# Define Prometheus Gauges
+accuracy_gauge = Gauge("model_accuracy", "Accuracy of the model")
+precision_gauge = Gauge("model_precision", "Precision of the model")
+recall_gauge = Gauge("model_recall", "Recall of the model")
+f1_gauge = Gauge("model_f1_score", "F1 score of the model")
+roc_auc_gauge = Gauge("model_roc_auc", "ROC AUC of the model")
 
 
 def train_and_log():
+    # Start Prometheus metrics server on port 8001
+    start_http_server(8001)
     # Get preprocessed data and preprocessor
     X_train, X_test, y_train, y_test, preprocessor = preprocess_data()
     y_train = np.array(y_train).ravel()
@@ -78,6 +92,13 @@ def train_and_log():
             mlflow.log_metric("recall", rec)
             mlflow.log_metric("f1_score", f1)
             mlflow.log_metric("roc_auc", roc)
+
+            # Update Prometheus Gauges
+            accuracy_gauge.set(acc)
+            precision_gauge.set(prec)
+            recall_gauge.set(rec)
+            f1_gauge.set(f1)
+            roc_auc_gauge.set(roc)
 
             # Save pipeline with joblib
             joblib.dump(pipeline, f"models/{name}_pipeline.pkl")
