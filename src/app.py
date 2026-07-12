@@ -1,14 +1,40 @@
 from fastapi import FastAPI
 import joblib
 import logging
+import json
 import pandas as pd
 import time
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
 from fastapi.responses import Response
 
 # Initialize FastAPI app
 app = FastAPI()
+
+accuracy_gauge = Gauge("model_accuracy", "Accuracy of the model", ["model"])
+precision_gauge = Gauge("model_precision", "Precision of the model", ["model"])
+recall_gauge = Gauge("model_recall", "Recall of the model", ["model"])
+f1_gauge = Gauge("model_f1_score", "F1 score of the model", ["model"])
+roc_auc_gauge = Gauge("model_roc_auc", "ROC AUC of the model", ["model"])
+
 pipeline = joblib.load("models/final_pipeline.pkl")
+
+
+def load_model_metrics():
+    try:
+        with open("models/metrics.json", "r", encoding="utf-8") as metrics_file:
+            metrics = json.load(metrics_file)
+    except FileNotFoundError:
+        return
+
+    for model_name, metric_values in metrics.items():
+        accuracy_gauge.labels(model=model_name).set(metric_values.get("accuracy", 0.0))
+        precision_gauge.labels(model=model_name).set(metric_values.get("precision", 0.0))
+        recall_gauge.labels(model=model_name).set(metric_values.get("recall", 0.0))
+        f1_gauge.labels(model=model_name).set(metric_values.get("f1_score", 0.0))
+        roc_auc_gauge.labels(model=model_name).set(metric_values.get("roc_auc", 0.0))
+
+
+load_model_metrics()
 feature_names = [
     "age", "sex", "cp", "trestbps", "chol", "fbs",
     "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal"

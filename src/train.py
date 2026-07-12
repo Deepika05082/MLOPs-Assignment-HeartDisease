@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import joblib
 import mlflow
@@ -12,11 +13,13 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.pipeline import Pipeline
 from src.preprocessing import preprocess_data
 import os
-from prometheus_client import Gauge, start_http_server
+from prometheus_client import Gauge, generate_latest, CONTENT_TYPE_LATEST
 from sklearn.exceptions import ConvergenceWarning
 import warnings
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
-
+from pydantic import BaseModel
+# Load trained model
+model = joblib.load("models/final_model.pkl")
 
 # Define Prometheus Gauges
 accuracy_gauge = Gauge("model_accuracy", "Accuracy of the model")
@@ -25,9 +28,11 @@ recall_gauge = Gauge("model_recall", "Recall of the model")
 f1_gauge = Gauge("model_f1_score", "F1 score of the model")
 roc_auc_gauge = Gauge("model_roc_auc", "ROC AUC of the model")
 
+class Features(BaseModel):
+    features: list
 
 def train_and_log():
-    start_http_server(8001)
+   
     # Get preprocessed data and preprocessor
     X_train, X_test, y_train, y_test, preprocessor = preprocess_data()
     y_train = np.array(y_train).ravel()
@@ -70,6 +75,8 @@ def train_and_log():
 
     os.makedirs("models", exist_ok=True)
     mlflow.end_run()
+    training_metrics = {}
+
     # Evaluate and log both models
     for pipeline, name, params in [(best_log, "Logistic Regression", grid_log.best_params_),
                                    (best_rf, "Random Forest", rand_rf.best_params_)]:
@@ -83,6 +90,12 @@ def train_and_log():
             rec = recall_score(y_test, y_pred, average="macro", zero_division=0)
             f1 = f1_score(y_test, y_pred, average="macro")
             roc = roc_auc_score(y_test, y_proba, multi_class="ovr")
+
+            accuracy_gauge.set(acc)
+            precision_gauge.set(prec)
+            recall_gauge.set(rec)
+            f1_gauge.set(f1)
+            roc_auc_gauge.set(roc)
 
             mlflow.log_param("model", name)
             mlflow.log_params(params)
@@ -98,6 +111,14 @@ def train_and_log():
             recall_gauge.set(rec)
             f1_gauge.set(f1)
             roc_auc_gauge.set(roc)
+
+            training_metrics[name] = {
+                "accuracy": float(acc),
+                "precision": float(prec),
+                "recall": float(rec),
+                "f1_score": float(f1),
+                "roc_auc": float(roc)
+            }
 
             # Save pipeline with joblib
             joblib.dump(pipeline, f"models/{name}_pipeline.pkl")
@@ -149,6 +170,9 @@ def train_and_log():
                 plt.close()
 
             mlflow.end_run()
+
+    with open("models/metrics.json", "w", encoding="utf-8") as metrics_file:
+        json.dump(training_metrics, metrics_file, indent=2)
 
 
 if __name__ == "__main__":

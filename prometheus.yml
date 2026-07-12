@@ -1,11 +1,8 @@
-global:
-  scrape_interval: 15s
-
 scrape_configs:
-  - job_name: "heart-api"
+  - job_name: "fastapi-app"
     static_configs:
-      - targets: ["heart-api:8000"]
+      - targets: ["localhost:8000"]
 
-  - job_name: 'node'
+  - job_name: "model-training"
     static_configs:
-      - targets: ['localhost:9100'] 
+      - targets: ["localhost:8001"]
