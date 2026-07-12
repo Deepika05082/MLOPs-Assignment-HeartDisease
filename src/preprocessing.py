@@ -32,7 +32,7 @@ def preprocess_data(test_size=0.2, random_state=42):
         ("encoder", OneHotEncoder(handle_unknown="ignore"))
     ])
 
-    # Combine into ColumnTransformer
+
     preprocessor = ColumnTransformer(
         transformers=[
             ("num", numeric_transformer, numeric_cols),
@@ -86,7 +86,7 @@ def preprocess_data(test_size=0.2, random_state=42):
     mlflow.log_artifact("eda/correlation_heatmap.png")
     plt.close()
 
-    # 4. Box Plots for Outliers (limit to first 5 numeric features)
+    # 4. Box Plots for Outliers 
     for col in numeric_cols[:5]:
         plt.figure(figsize=(6, 4))
         sns.boxplot(x=X_train[col])

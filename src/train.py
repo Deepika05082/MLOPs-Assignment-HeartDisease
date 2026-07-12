@@ -27,7 +27,6 @@ roc_auc_gauge = Gauge("model_roc_auc", "ROC AUC of the model")
 
 
 def train_and_log():
-    # Start Prometheus metrics server on port 8001
     start_http_server(8001)
     # Get preprocessed data and preprocessor
     X_train, X_test, y_train, y_test, preprocessor = preprocess_data()

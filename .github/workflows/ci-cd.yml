@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: deepika05082/mlops-assignment-heartdisease   # 🔹 force lowercase here
+  IMAGE_NAME: deepika05082/mlops-assignment-heartdisease  
 
 jobs:
   lint:
@@ -128,7 +128,7 @@ jobs:
         run: |
           echo " Docker image built and ready for deployment"
           echo ""
-          echo "📋 For local Minikube deployment:"
+          echo " For local Minikube deployment:"
           echo "   1. Build image: docker build -t heart-disease-model:latest ."
           echo "   2. Load to Minikube: minikube image load heart-disease-model:latest"
           echo "   3. Deploy: kubectl apply -f deployment.yaml"

@@ -7,7 +7,7 @@
 
 **📌 Code Repository:** [https://github.com/YOUR-USERNAME/Assignment-HeartDisease](https://github.com/YOUR-USERNAME/Assignment-HeartDisease)
 
----
+
 
 ## 📑 Table of Contents
 
@@ -21,23 +21,23 @@
 8. [API Reference](#api-reference)
 9. [Project Repository](#project-repository)
 
----
+
 
 ## Executive Summary
 
 This project implements an end-to-end MLOps pipeline for **multi-class heart disease severity prediction**. The system classifies heart disease into 5 severity levels using Scikit-learn, FastAPI, Docker, Kubernetes (Minikube), and GitHub Actions CI/CD.
 
 **Key Components:**
-- 🤖 Multi-class ML model (LogisticRegression + RandomForest)
-- 🚀 FastAPI REST API with probability predictions
-- 📦 Docker containerization with python:3.10-slim
-- ☸️ Kubernetes deployment on Minikube
-- 📊 MLflow experiment tracking
-- 🔄 GitHub Actions CI/CD (lint → test → build)
-- 📈 Prometheus metrics monitoring
-- ✅ Comprehensive unit tests (pytest)
+-  Multi-class ML model (LogisticRegression + RandomForest)
+-  FastAPI REST API with probability predictions
+-  Docker containerization with python:3.10-slim
+-  Kubernetes deployment on Minikube
+-  MLflow experiment tracking
+-  GitHub Actions CI/CD (lint → test → build)
+-  Prometheus metrics monitoring
+-  Comprehensive unit tests (pytest)
 
----
+
 
 ## Setup & Installation Instructions
 
@@ -121,7 +121,7 @@ kubectl port-forward svc/heart-disease-service 8000:8000
 **Feature Breakdown:**
 
 | Category | Features | Details |
-|----------|----------|---------|
+|-|-||
 | **Numeric** (5) | age, trestbps, chol, thalach, oldpeak | Standardized with StandardScaler |
 | **Categorical** (8) | sex, cp, fbs, restecg, exang, slope, ca, thal | One-hot encoded after imputation |
 
@@ -136,7 +136,7 @@ kubectl port-forward svc/heart-disease-service 8000:8000
 **Key Insights:**
 - [Add EDA visualizations here: feature distributions, class balance, correlation matrix]
 
----
+
 
 ## Modeling Choices
 
@@ -147,7 +147,7 @@ kubectl port-forward svc/heart-disease-service 8000:8000
 **Models Trained:**
 
 | Model | Algorithm | Tuning Method |
-|-------|-----------|---------------|
+|-|--||
 | Model 1 | LogisticRegression | GridSearchCV (5-fold) |
 | Model 2 | RandomForest | RandomizedSearchCV (5-fold) |
 
@@ -161,14 +161,14 @@ kubectl port-forward svc/heart-disease-service 8000:8000
 
 **Model Performance:**
 | Metric | Value |
-|--------|-------|
+|--|-|
 | Accuracy | [Your %] |
 | Precision (macro) | [Your %] |
 | Recall (macro) | [Your %] |
 | F1-Score (macro) | [Your %] |
 | ROC-AUC (OvR) | [Your %] |
 
----
+
 
 ## Experiment Tracking
 
@@ -194,7 +194,7 @@ mlflow ui  # http://localhost:5000
 - Download model artifacts
 - View visualizations
 
----
+
 
 ## MLOps Architecture
 
@@ -244,7 +244,7 @@ mlflow ui  # http://localhost:5000
 ### Technology Stack
 
 | Layer | Technology |
-|-------|-----------|
+|-|--|
 | **ML Framework** | Scikit-learn, pandas, numpy |
 | **API Framework** | FastAPI + Uvicorn |
 | **Containerization** | Docker |
@@ -256,7 +256,7 @@ mlflow ui  # http://localhost:5000
 | **Metrics** | prometheus-client |
 
 | Run | Model | Algorithm | Hyperparameters | Metrics |
-|-----|-------|-----------|-----------------|---------|
+|--|-|--|--||
 | 1 | LogisticRegression | GridSearchCV | [Best hyperparameters] | [See MLflow] |
 | 2 | RandomForest | RandomizedSearchCV | [Best hyperparameters] | [See MLflow] |
 
@@ -270,7 +270,7 @@ Access MLflow UI to:
 - Download logged artifacts
 - Track metrics over experiments
 
----
+
 
 ## MLOps Architecture
 
@@ -295,7 +295,7 @@ Expected components:
 ### Technology Stack
 
 | Layer | Technology | Purpose |
-|-------|-----------|---------|
+|-|--||
 | **Data** | Pandas, NumPy | Data processing |
 | **ML** | Scikit-learn | Model training |
 | **Tracking** | MLflow | Experiment tracking |
@@ -305,7 +305,7 @@ Expected components:
 | **CI/CD** | GitHub Actions | Automated testing & build |
 | **Monitoring** | Prometheus | Metrics collection |
 
----
+
 
 ## Containerization
 
@@ -565,7 +565,7 @@ Service NodePort → External Access (Port 30080)
 
 **[Add screenshot: Application running in Kubernetes]**
 
----
+
 
 ## API Reference
 
@@ -604,7 +604,7 @@ Returns Prometheus-format metrics for monitoring.
 
 **GET** `/docs` - Interactive API documentation (Swagger UI)
 
----
+
 
 ## Project Repository
 
@@ -633,7 +633,7 @@ Assignment-HeartDisease/
 ### Key Files
 
 | File | Purpose |
-|------|---------|
+|||
 | [src/app.py](src/app.py) | FastAPI REST API |
 | [src/train.py](src/train.py) | Model training |
 | [src/preprocessing.py](src/preprocessing.py) | Data preprocessing |
@@ -647,11 +647,11 @@ Assignment-HeartDisease/
 **📌 Full Repository:**  
 [https://github.com/YOUR-USERNAME/Assignment-HeartDisease](https://github.com/YOUR-USERNAME/Assignment-HeartDisease)
 
----
+
 
 ## Summary
 
-✅ **Completed Deliverables:**
+ **Completed Deliverables:**
 - Multi-class ML model for heart disease prediction
 - FastAPI REST API with Docker containerization
 - Kubernetes deployment on Minikube
@@ -670,7 +670,7 @@ Assignment-HeartDisease/
 - Infrastructure-as-code (Kubernetes)
 - Experiment tracking (MLflow)
 
----
+
 
 ## References
 
@@ -682,11 +682,11 @@ Assignment-HeartDisease/
 6. [Docker Documentation](https://docs.docker.com/)
 7. [UCI Heart Disease Dataset](https://archive.ics.uci.edu/ml/datasets/heart+disease)
 
----
+
 
 **Document Prepared By:** [Your Name]  
 **Date:** 2024  
-**Status:** ✅ Production Ready
+**Status:**  Production Ready
 Moderate        [FN]    [FN]     [TP]     [FP]      [FP]
 Severe          [FN]    [FN]     [FN]     [TP]      [FP]
 V.Severe        [FN]    [FN]     [FN]     [FN]      [TP]
@@ -890,18 +890,18 @@ pytest tests/test_app.py -v
 ### Deployment Validation
 
 | Test | Status | Details |
-|------|--------|---------|
-| Unit Tests | ✅ Pass | All pytest tests pass |
-| Docker Build | ✅ Pass | Image builds successfully (~500MB) |
-| Docker Run | ✅ Pass | Container starts and serves API |
-| API Health | ✅ Pass | Health endpoint (/docs) responds |
-| Multi-class Prediction | ✅ Pass | Returns valid predictions with probabilities |
-| Probability Distribution | ✅ Pass | All probabilities sum to ~1.0 |
-| Kubernetes Deployment | ✅ Pass | Pod runs on Minikube with 2 replicas |
-| Liveness Probe | ✅ Pass | Pod health checks pass |
-| Readiness Probe | ✅ Pass | Pod marked ready for traffic |
-| Metrics Endpoint | ✅ Pass | Prometheus metrics available (/metrics) |
-| Docker Compose Stack | ✅ Pass | API + Prometheus + Grafana running |
+||--||
+| Unit Tests |  Pass | All pytest tests pass |
+| Docker Build |  Pass | Image builds successfully (~500MB) |
+| Docker Run |  Pass | Container starts and serves API |
+| API Health |  Pass | Health endpoint (/docs) responds |
+| Multi-class Prediction |  Pass | Returns valid predictions with probabilities |
+| Probability Distribution |  Pass | All probabilities sum to ~1.0 |
+| Kubernetes Deployment |  Pass | Pod runs on Minikube with 2 replicas |
+| Liveness Probe |  Pass | Pod health checks pass |
+| Readiness Probe |  Pass | Pod marked ready for traffic |
+| Metrics Endpoint |  Pass | Prometheus metrics available (/metrics) |
+| Docker Compose Stack |  Pass | API + Prometheus + Grafana running |
 
 ### Production Checklist
 
@@ -930,7 +930,7 @@ Error Rate: [Your %]
 Throughput: [Your req/sec]
 
 
----
+
 
 ## Repository & Code
 
@@ -1135,22 +1135,22 @@ pytest tests/ -v --cov=src --cov-report=html
 
 **Expected:** All tests pass ✅
 
----
+
 
 ## Conclusion
 
 ### Summary of Accomplishments
 
-✅ **Data Processing:** Complete EDA and preprocessing pipeline  
-✅ **Model Development:** Trained and evaluated ML model  
-✅ **Experiment Tracking:** MLflow integration for reproducibility  
-✅ **API Development:** FastAPI REST API for predictions  
-✅ **Containerization:** Docker image for consistent deployment  
-✅ **Orchestration:** Kubernetes deployment on Minikube  
-✅ **CI/CD Pipeline:** GitHub Actions for automated testing and building  
-✅ **Monitoring:** Prometheus metrics for observability  
-✅ **Testing:** Comprehensive unit tests with pytest  
-✅ **Documentation:** Complete setup and deployment guides  
+ **Data Processing:** Complete EDA and preprocessing pipeline  
+ **Model Development:** Trained and evaluated ML model  
+ **Experiment Tracking:** MLflow integration for reproducibility  
+ **API Development:** FastAPI REST API for predictions  
+ **Containerization:** Docker image for consistent deployment  
+ **Orchestration:** Kubernetes deployment on Minikube  
+ **CI/CD Pipeline:** GitHub Actions for automated testing and building  
+ **Monitoring:** Prometheus metrics for observability  
+ **Testing:** Comprehensive unit tests with pytest  
+ **Documentation:** Complete setup and deployment guides  
 
 
 
@@ -1164,7 +1164,7 @@ pytest tests/ -v --cov=src --cov-report=html
 5. **FastAPI** is ideal for building production-grade ML APIs
 6. **Testing** is critical for maintaining code quality
 
----
+
 
 ## References
 
@@ -1189,81 +1189,5 @@ pytest tests/ -v --cov=src --cov-report=html
 7. Scikit-learn Documentation
    https://scikit-learn.org/stable/
 
----
-
-## Appendix
-
-### A. Setup Commands Summary
-
-bash
-# Clone repo
-git clone https://github.com/YOUR-USERNAME/Assignment-HeartDisease.git
-
-# Setup environment
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-
-# Run tests
-pytest tests/ -v
-
-# Run locally
-uvicorn src.app:app --reload
-
-# Deploy to Minikube
-minikube start --driver=docker
-docker build -t heart-disease-model:latest .
-minikube image load heart-disease-model:latest
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
-kubectl port-forward svc/heart-disease-service 8000:8000
 
 
-### B. Useful Commands
-
-bash
-# Git
-git add .
-git commit -m "message"
-git push origin main
-
-# Docker
-docker build -t image:tag .
-docker run -p 8000:8000 image:tag
-docker images
-docker ps
-
-# Kubernetes
-kubectl get pods
-kubectl get svc
-kubectl logs -f pod-name
-kubectl describe pod pod-name
-kubectl apply -f file.yaml
-kubectl delete -f file.yaml
-
-# Python
-pytest tests/ -v
-flake8 src
-pip install -r requirements.txt
-
-
-### C. Troubleshooting
-
-**Issue:** Tests fail
-**Solution:** Ensure all dependencies installed: `pip install -r requirements.txt`
-
-**Issue:** Docker build fails
-**Solution:** Check Dockerfile exists and Docker daemon is running
-
-**Issue:** Minikube pod won't start
-**Solution:** Check logs: `kubectl describe pod` and `kubectl logs`
-
-**Issue:** API not accessible
-**Solution:** Verify port-forward: `kubectl port-forward svc/heart-disease-service 8000:8000`
-
----
-
-**Document Prepared By:** [Your Name]  
-**Date:** [Date]  
-**Course:** MLOps - Assignment Heart Disease  
-**Institution:** BITS Pilani

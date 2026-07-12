@@ -9,7 +9,7 @@ echo "=========================================="
 echo ""
 
 # Step 1: Check Minikube is installed
-echo "✅ Checking Minikube..."
+echo " Checking Minikube..."
 if ! command -v minikube &> /dev/null; then
     echo "❌ Minikube not found. Please install it first."
     echo "   https://minikube.sigs.k8s.io/docs/start/"
@@ -18,47 +18,47 @@ fi
 
 # Step 2: Start Minikube
 echo ""
-echo "🟢 Starting Minikube..."
+echo " Starting Minikube..."
 minikube start --driver=docker
 
 # Step 3: Verify kubectl
 echo ""
-echo "✅ Verifying kubectl..."
+echo " Verifying kubectl..."
 kubectl cluster-info
 
 # Step 4: Build Docker image
 echo ""
-echo "🐳 Building Docker image..."
+echo " Building Docker image..."
 docker build -t heart-disease-model:latest .
 
 # Step 5: Load image to Minikube
 echo ""
-echo "📥 Loading image to Minikube..."
+echo "Loading image to Minikube..."
 minikube image load heart-disease-model:latest
 
 # Step 6: Deploy to Minikube
 echo ""
-echo "🚀 Deploying to Minikube..."
+echo " Deploying to Minikube..."
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 
 # Step 7: Wait for pods to be ready
 echo ""
-echo "⏳ Waiting for pods to be ready..."
+echo " Waiting for pods to be ready..."
 sleep 5
 kubectl get pods
 
 # Step 8: Get service info
 echo ""
-echo "📋 Service Information:"
+echo " Service Information:"
 kubectl get svc heart-disease-service
 
 # Step 9: Display access information
 echo ""
 echo "=========================================="
-echo "✅ Deployment Complete!"
+echo " Deployment Complete!"
 echo ""
-echo "🌐 Access Methods:"
+echo " Access Methods:"
 echo ""
 echo "1. Port Forwarding (Recommended for localhost):"
 echo "   kubectl port-forward svc/heart-disease-service 8000:8000"
@@ -71,8 +71,8 @@ echo "3. NodePort (Direct access):"
 echo "   minikube ip"
 echo "   Then visit: http://<minikube-ip>:30080"
 echo ""
-echo "📚 API Documentation: http://localhost:8000/docs"
-echo "📊 Metrics: http://localhost:8000/metrics"
+echo " API Documentation: http://localhost:8000/docs"
+echo " Metrics: http://localhost:8000/metrics"
 echo ""
 echo "🔍 Useful Commands:"
 echo "   - View logs: kubectl logs -f deployment/heart-disease-model"
